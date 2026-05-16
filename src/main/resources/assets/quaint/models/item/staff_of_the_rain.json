@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "quaint:item/staff_of_the_rain"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "extraInputs": [
+    {
+      "item": "malum:hex_ash",
+      "count": 1
+    },
+    {
+      "item": "minecraft:glowstone",
+      "count": 2
+    },
+    {
+      "tag": "c:gems/quartz",
+      "count": 8
+    }
+  ],
+  "input": {
+    "item": "quaint:heart_of_the_moon",
+    "count": 1
+  },
+  "result": {
+    "id": "quaint:heart_of_the_sun",
+    "count": 1
+  },
+  "spirits": [
+    {
+      "type": "malum:arcane",
+      "count": 4
+    },
+    {
+      "type": "malum:earthen",
+      "count": 16
+    }
+  ]
+}

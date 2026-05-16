@@ -1,0 +1,45 @@
+{
+  "conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "extraInputs": [
+    {
+      "item": "malum:rotting_essence",
+      "count": 16
+    },
+    {
+      "item": "malum:blighted_gunk",
+      "count": 16
+    },
+    {
+      "item": "minecraft:wither_rose",
+      "count": 1
+    },
+    {
+      "item": "minecraft:sculk",
+      "count": 4
+    }
+  ],
+  "input": {
+    "item": "minecraft:honey_bottle",
+    "count": 1
+  },
+  "result": {
+    "id": "quaint:dubious_decoction",
+    "count": 1
+  },
+  "spirits": [
+    {
+      "type": "malum:eldritch",
+      "count": 4
+    },
+    {
+      "type": "malum:wicked",
+      "count": 16
+    }
+  ]
+}

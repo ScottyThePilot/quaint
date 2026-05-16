@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": [
+      {
+        "tag": "minecraft:saplings"
+      },
+      {
+        "tag": "minecraft:leaves"
+      }
+    ],
+    "X": {
+      "item": "minecraft:golden_apple"
+    }
+  },
+  "result": {
+    "id": "quaint:mystery_sapling",
+    "count": 1
+  }
+}

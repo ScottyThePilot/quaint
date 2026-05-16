@@ -1,0 +1,84 @@
+{
+  "itemGroup.quaint.main": "Quaint",
+
+  "item.quaint.god_particle": "God Particle",
+
+  "item.quaint.heart_of_the_sun": "Heart of the Sun",
+  "item.quaint.heart_of_the_rain": "Heart of the Downpour",
+  "item.quaint.heart_of_the_storm": "Heart of the Storm",
+  "item.quaint.heart_of_the_earth": "Heart of the Earth",
+  "item.quaint.heart_of_the_moon": "Heart of the Moon",
+  "item.quaint.heart_of_the_skies": "Heart of the Skies",
+
+  "item.quaint.staff_of_the_sun": "Staff of the Sun",
+  "item.quaint.staff_of_the_rain": "Staff of the Rain",
+  "item.quaint.staff_of_the_storm": "Staff of the Storm",
+
+  "item.quaint.staff_of_the_sun.success": "The clouds begin to part...",
+  "item.quaint.staff_of_the_sun.failure.same_weather": "You may not use this now; the weather is already clear",
+  "item.quaint.staff_of_the_sun.failure.wrong_dimension": "You may not use this here",
+  "item.quaint.staff_of_the_rain.success": "The clouds begin to darken, and rain starts to fall...",
+  "item.quaint.staff_of_the_rain.failure.same_weather": "You may not use this now; the weather is already rainy",
+  "item.quaint.staff_of_the_rain.failure.wrong_dimension": "You may not use this here",
+  "item.quaint.staff_of_the_storm.success": "The clouds begin to darken, and thunder can be heard in the distance...",
+  "item.quaint.staff_of_the_storm.failure.same_weather": "You may not use this now; the weather is already thundering",
+  "item.quaint.staff_of_the_storm.failure.wrong_dimension": "You may not use this here",
+
+  "item.quaint.mystery_sapling": "Mystery Sapling",
+  "item.quaint.mystery_seeds": "Mystery Seeds",
+  "item.quaint.mystery_box": "Mystery Box",
+  "item.quaint.mystery_box.loot_table": "Loot Table: %s",
+  "item.quaint.mystery_box.loot_table.none": "Loot Table: (None)",
+
+  "item.quaint.dubious_decoction": "Dubious Decoction",
+
+  "item.minecraft.potion.effect.doom": "Potion of Doom",
+  "item.minecraft.splash_potion.effect.doom": "Splash Potion of Doom",
+  "item.minecraft.lingering_potion.effect.doom": "Lingering Potion of Doom",
+  "item.minecraft.tipped_arrow.effect.doom": "Arrow of Doom",
+
+  "item.minecraft.potion.effect.clarity": "Potion of Clarity",
+  "item.minecraft.splash_potion.effect.clarity": "Splash Potion of Clarity",
+  "item.minecraft.lingering_potion.effect.clarity": "Lingering Potion of Clarity",
+  "item.minecraft.tipped_arrow.effect.clarity": "Arrow of Clarity",
+
+  "item.quaint.holy_mackerel": "Holy Mackerel",
+
+  "effect.quaint.clarity": "Clarity",
+  "effect.quaint.clarity.description": "Clears all effects.",
+
+  "effect.quaint.camouflaged": "Camouflaged",
+  "effect.quaint.camouflaged.description": "Prevents hostile mobs from targeting you.",
+
+  "effect.quaint.doom": "Doom",
+  "effect.quaint.doom.description": "A hint that your time may be nigh.",
+
+  "entity.quaint.divine_lightning_bolt": "Divine Lightning Bolt",
+
+  "gamerule.keepExperience": "Keep experience after death",
+  "gamerule.keepExperience.description": "Players will not lose their experience upon death.",
+  "gamerule.doGiveCamouflagedOnRespawn": "Give players camouflaged on respawn",
+  "gamerule.doGiveCamouflagedOnRespawn.description": "Players will receive the camouflaged effect on spawn, preventing mobs from targeting them.",
+
+  "commands.smite.success.single": "Struck %s with lighting",
+  "commands.smite.success.multiple": "Struck %s entities with lightning",
+  "commands.smite.success.location": "Struck lightning at %s, %s, %s",
+
+  "death.attack.doom": "%1$s met their doom",
+
+  "quaint.configuration.title": "Quaint Configs",
+  "quaint.configuration.section.quaint.common.toml": "Quaint Configs",
+  "quaint.configuration.section.quaint.common.toml.title": "Quaint Configs",
+  "quaint.configuration.section.quaint.client.toml": "Quaint Client Configs",
+  "quaint.configuration.section.quaint.client.toml.title": "Quaint Client Configs",
+  "quaint.configuration.section.quaint.server.toml": "Quaint Server Configs",
+  "quaint.configuration.section.quaint.server.toml.title": "Quaint Server Configs",
+  "quaint.configuration.server.camouflaged_duration": "Camouflaged Effect Duration",
+  "quaint.configuration.server.staff_weather": "Weather Staves",
+  "quaint.configuration.server.staff_weather.cooldown": "Staff Cooldown",
+  "quaint.configuration.server.staff_weather.duration_min": "Staff Weather Minimum Length",
+  "quaint.configuration.server.staff_weather.duration_max": "Staff Weather Maximum Length",
+  "quaint.configuration.client.loot_table_keys": "Loot Table Keys",
+  "quaint.configuration.client.loot_table_keys.prettify": "Prettify Loot Table Keys",
+  "quaint.configuration.client.loot_table_keys.include_namespace": "Include Namespace in Loot Table Keys/Names"
+}

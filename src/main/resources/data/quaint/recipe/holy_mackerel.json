@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " F",
+    "P "
+  ],
+  "key": {
+    "F": {
+      "tag": "minecraft:fishes"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "result": {
+    "id": "quaint:holy_mackerel"
+  }
+}

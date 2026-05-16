@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "quaint:heart_of_the_earth",
+    "quaint:heart_of_the_moon",
+    "quaint:heart_of_the_rain",
+    "quaint:heart_of_the_skies",
+    "quaint:heart_of_the_storm",
+    "quaint:heart_of_the_sun"
+  ]
+}

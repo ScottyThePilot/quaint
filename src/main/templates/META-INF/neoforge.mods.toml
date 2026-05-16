@@ -1,0 +1,51 @@
+modLoader = "javafml"
+loaderVersion = "${loader_version_range}"
+license = "${mod_license}"
+issueTrackerURL = "https://github.com/ScottyThePilot/quaint/issues"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+#updateJSONURL = "https://api.modrinth.com/updates/{id}/forge_updates.json"
+displayURL = "https://github.com/ScottyThePilot/quaint"
+logoFile = "logo.png"
+authors = "ScottyThePilot"
+description = '''
+A variety of small additions and resources, potentially for use in modpacks.
+'''
+
+# The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
+#[[mixins]]
+#config="${mod_id}.mixins.json"
+
+[[accessTransformers]]
+file = "META-INF/accesstransformer.cfg"
+
+[[dependencies."${mod_id}"]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${neo_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId = "malum"
+type = "optional"
+versionRange = "[${malum_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId = "createaddition"
+type = "optional"
+versionRange = "[${createaddition_version},)"
+ordering = "NONE"
+side = "BOTH"

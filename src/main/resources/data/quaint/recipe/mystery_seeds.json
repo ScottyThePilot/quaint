@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": [
+      {
+        "tag": "c:seeds"
+      },
+      {
+        "item": "minecraft:short_grass"
+      },
+      {
+        "item": "minecraft:tall_grass"
+      }
+    ],
+    "X": {
+      "item": "minecraft:golden_apple"
+    }
+  },
+  "result": {
+    "id": "quaint:mystery_seeds",
+    "count": 1
+  }
+}

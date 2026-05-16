@@ -1,0 +1,45 @@
+{
+  "conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "malum"
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "extraInputs": [
+    {
+      "item": "malum:hex_ash",
+      "count": 1
+    },
+    {
+      "item": "minecraft:moss_block",
+      "count": 2
+    },
+    {
+      "item": "minecraft:pitcher_pod",
+      "count": 4
+    },
+    {
+      "item": "minecraft:hanging_roots",
+      "count": 8
+    }
+  ],
+  "input": {
+    "item": "quaint:heart_of_the_skies",
+    "count": 1
+  },
+  "result": {
+    "id": "quaint:heart_of_the_earth",
+    "count": 1
+  },
+  "spirits": [
+    {
+      "type": "malum:arcane",
+      "count": 4
+    },
+    {
+      "type": "malum:earthen",
+      "count": 16
+    }
+  ]
+}

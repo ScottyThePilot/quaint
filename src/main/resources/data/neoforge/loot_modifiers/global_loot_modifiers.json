@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "entries": [
+    "quaint:inject_heart_of_the_earth",
+    "quaint:inject_heart_of_the_moon",
+    "quaint:inject_heart_of_the_sky",
+    "quaint:inject_heart_of_the_sun"
+  ]
+}
