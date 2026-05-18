@@ -9,6 +9,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.common.NeoForge;
@@ -57,6 +59,9 @@ import scottythepilot.quaint.effects.DoomMobEffect;
 import scottythepilot.quaint.entities.DivineLightningBolt;
 import scottythepilot.quaint.items.*;
 import scottythepilot.quaint.items.BottleItem;
+import scottythepilot.quaint.loot.LootItemEnsureUniqueCondition;
+import scottythepilot.quaint.loot.LootItemRegisterUniqueFunction;
+import scottythepilot.quaint.loot.UniqueLootData;
 
 @Mod(QuaintMod.MOD_ID)
 public class QuaintMod {
@@ -84,6 +89,8 @@ public class QuaintMod {
   public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, MOD_ID);
   public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(Registries.MOB_EFFECT, MOD_ID);
   public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(Registries.POTION, MOD_ID);
+  public static final DeferredRegister<LootItemConditionType> LOOT_CONDITION_TYPES = DeferredRegister.create(Registries.LOOT_CONDITION_TYPE, MOD_ID);
+  public static final DeferredRegister<LootItemFunctionType<?>> LOOT_FUNCTION_TYPES = DeferredRegister.create(Registries.LOOT_FUNCTION_TYPE, MOD_ID);
 
   public static final FoodProperties FOOD_GOD_PARTICLE =
     (new FoodProperties.Builder())
@@ -178,6 +185,11 @@ public class QuaintMod {
   public static final DeferredHolder<Potion, Potion> POTION_DOOM =
     POTIONS.register("doom", () -> new Potion("doom", new MobEffectInstance(MOB_EFFECT_DOOM, 48000)));
 
+  public static final DeferredHolder<LootItemConditionType, LootItemConditionType> LOOT_CONDITION_ENSURE_UNIQUE =
+    LOOT_CONDITION_TYPES.register("ensure_unique", () -> new LootItemConditionType(LootItemEnsureUniqueCondition.CODEC));
+  public static final DeferredHolder<LootItemFunctionType<?>, LootItemFunctionType<LootItemRegisterUniqueFunction>> LOOT_FUNCTION_REGISTER_UNIQUE =
+    LOOT_FUNCTION_TYPES.register("register_unique", () -> new LootItemFunctionType<>(LootItemRegisterUniqueFunction.CODEC));
+
   public static TagKey<EntityType<?>> TAG_ENTITY_TYPE_SEES_THROUGH_CAMOUFLAGE =
     QuaintMod.tag(Registries.ENTITY_TYPE, "sees_through_camouflage");
 
@@ -200,6 +212,8 @@ public class QuaintMod {
 
   public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> ATTACHMENT_TYPE_FIRST_JOIN_DONE =
     ATTACHMENT_TYPES.register("first_join_done", () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).build());
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<UniqueLootData>> ATTACHMENT_TYPE_UNIQUE_LOOT =
+    ATTACHMENT_TYPES.register("unique_loot", () -> AttachmentType.builder(() -> new UniqueLootData()).serialize(UniqueLootData.CODEC).build());
 
   private static void generateDisplayItems(ItemDisplayParameters parameters, CreativeModeTab.Output output) {
     output.accept(ITEM_HEART_OF_THE_SUN.get());
@@ -235,6 +249,8 @@ public class QuaintMod {
     ENTITY_TYPES.register(modEventBus);
     MOB_EFFECTS.register(modEventBus);
     POTIONS.register(modEventBus);
+    LOOT_CONDITION_TYPES.register(modEventBus);
+    LOOT_FUNCTION_TYPES.register(modEventBus);
     ATTACHMENT_TYPES.register(modEventBus);
 
     QuaintConfig.Client.container.register(modContainer);
