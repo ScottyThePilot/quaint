@@ -1,5 +1,6 @@
 package scottythepilot.quaint;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.core.Registry;
@@ -9,9 +10,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.RegistryAccess;
@@ -192,6 +196,11 @@ public class QuaintMod {
         .build();
     });
 
+  public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, MOD_ID);
+
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> ATTACHMENT_TYPE_FIRST_JOIN_DONE =
+    ATTACHMENT_TYPES.register("first_join_done", () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).build());
+
   private static void generateDisplayItems(ItemDisplayParameters parameters, CreativeModeTab.Output output) {
     output.accept(ITEM_HEART_OF_THE_SUN.get());
     output.accept(ITEM_HEART_OF_THE_RAIN.get());
@@ -226,6 +235,7 @@ public class QuaintMod {
     ENTITY_TYPES.register(modEventBus);
     MOB_EFFECTS.register(modEventBus);
     POTIONS.register(modEventBus);
+    ATTACHMENT_TYPES.register(modEventBus);
 
     QuaintConfig.Client.container.register(modContainer);
     QuaintConfig.Server.container.register(modContainer);
@@ -250,6 +260,12 @@ public class QuaintMod {
     return livingEntity.getType().is(BuiltInRegistries.ENTITY_TYPE.getTag(TAG_ENTITY_TYPE_SEES_THROUGH_CAMOUFLAGE).orElseThrow());
   }
 
+  public static class PlayerFirstJoinEvent extends PlayerEvent {
+    public PlayerFirstJoinEvent(Player player) {
+      super(player);
+    }
+  }
+
   @EventBusSubscriber(modid = QuaintMod.MOD_ID, value = Dist.CLIENT)
   public static class ClientEvents {
     @SubscribeEvent
@@ -263,8 +279,8 @@ public class QuaintMod {
   }
 
   @EventBusSubscriber(modid = QuaintMod.MOD_ID)
-  public static class Events {
-    // Modify visibility of entities with the sorrow effect
+  public static class CommonEvents {
+    // Modify visibility of entities with the camouflage effect
     @SubscribeEvent
     public static void onLivingVisibility(LivingEvent.LivingVisibilityEvent event) {
       if (event.getEntity().hasEffect(MOB_EFFECT_CAMOUFLAGED)) {
@@ -272,7 +288,7 @@ public class QuaintMod {
       }
     }
 
-    // Prevent entities from targeting entities with the sorrow effect
+    // Prevent entities from targeting entities with the camouflage effect
     @SubscribeEvent
     public static void onLivingChangeTarget(LivingChangeTargetEvent event) {
       LivingEntity source = event.getEntity();
@@ -283,7 +299,7 @@ public class QuaintMod {
       event.setCanceled(true);
     }
 
-    // Remove sorrow effect when an entity with it attacks another entity
+    // Remove camouflage effect when an entity with it attacks another entity
     @SubscribeEvent
     public static void onLivingAttackTarget(LivingDamageEvent.Pre event) {
       if (event.getSource().getEntity() instanceof LivingEntity attacker) {
@@ -326,15 +342,22 @@ public class QuaintMod {
     }
 
     @SubscribeEvent
+    public static void onPlayerFirstJoin(PlayerFirstJoinEvent event) {
+      Player player = event.getEntity();
+      LOGGER.info("Player {} joining for the first time", player.getGameProfile().getName());
+
+      if (player.level().isClientSide()) return;
+      if (shouldGiveCamouflagedEffect(player.level().getGameRules())) {
+        giveCamouflagedEffect(player);
+      }
+    }
+
+    @SubscribeEvent
     public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
       Player player = event.getEntity();
-      if (player.level().isClientSide()) return;
-
-      if (!player.getPersistentData().getBoolean(QuaintMod.MOD_ID + ".first_join_done")) {
-        player.getPersistentData().putBoolean(QuaintMod.MOD_ID + ".first_join_done", true);
-        if (shouldGiveCamouflagedEffect(player.level().getGameRules())) {
-          giveCamouflagedEffect(player);
-        }
+      if (!player.getData(ATTACHMENT_TYPE_FIRST_JOIN_DONE)) {
+        player.setData(ATTACHMENT_TYPE_FIRST_JOIN_DONE, true);
+        NeoForge.EVENT_BUS.post(new PlayerFirstJoinEvent(player));
       }
     }
 

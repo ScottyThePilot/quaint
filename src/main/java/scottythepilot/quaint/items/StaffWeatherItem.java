@@ -4,7 +4,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.Level;
 import scottythepilot.quaint.QuaintConfig;
 import scottythepilot.quaint.Utils;
 
@@ -23,7 +22,7 @@ public class StaffWeatherItem extends StaffItem {
       return false;
     }
 
-    if (!levelWeatherSupported(player.level())) {
+    if (!Utils.isLevelWeatherSupported(player.level())) {
       player.displayClientMessage(Component.translatable(this.getDescriptionId() + ".failure.wrong_dimension"), true);
       return false;
     }
@@ -35,9 +34,5 @@ public class StaffWeatherItem extends StaffItem {
 
     player.displayClientMessage(Component.translatable(this.getDescriptionId() + ".success"), true);
     return true;
-  }
-
-  private static boolean levelWeatherSupported(Level level) {
-    return level.dimensionType().hasSkyLight();
   }
 }

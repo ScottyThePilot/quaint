@@ -30,25 +30,19 @@ public final class Utils {
 
     public static WeatherType of(Level level) {
       if (level.isThundering()) {
-        return WeatherType.THUNDERING;
+        return THUNDERING;
       } else if (level.isRaining()) {
-        return WeatherType.RAINING;
+        return RAINING;
       } else {
-        return WeatherType.CLEAR;
+        return CLEAR;
       }
     }
 
     public void apply(ServerLevel serverLevel, int length) {
       switch (this) {
-        case WeatherType.CLEAR:
-          Utils.setWeatherClear(serverLevel, length);
-          break;
-        case WeatherType.RAINING:
-          Utils.setWeatherRaining(serverLevel, length);
-          break;
-        case WeatherType.THUNDERING:
-          Utils.setWeatherThundering(serverLevel, length);
-          break;
+        case CLEAR -> Utils.setWeatherClear(serverLevel, length);
+        case RAINING -> Utils.setWeatherRaining(serverLevel, length);
+        case THUNDERING -> Utils.setWeatherThundering(serverLevel, length);
       }
     }
   }
@@ -66,6 +60,10 @@ public final class Utils {
   public static void setWeatherThundering(ServerLevel level, int length) {
     QuaintMod.LOGGER.debug("Setting weather to thunder");
     level.setWeatherParameters(0, length, true, true);
+  }
+
+  public static boolean isLevelWeatherSupported(Level level) {
+    return level.dimensionType().hasSkyLight();
   }
 
   public static String prettifyResource(String string) {
