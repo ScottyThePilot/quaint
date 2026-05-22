@@ -1,5 +1,7 @@
 package scottythepilot.quaint;
 
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.TagKey;
@@ -252,7 +254,11 @@ public class QuaintMod {
   public static class ClientEvents {
     @SubscribeEvent
     public static void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-      event.registerEntityRenderer(ENTITY_TYPE_DIVINE_LIGHTNING_BOLT.get(), DivineLightningBolt.ENTITY_RENDERER_PROVIDER);
+      // This looks really awful but it works
+      @SuppressWarnings({ "rawtypes", "unchecked" })
+      final EntityRendererProvider<DivineLightningBolt> DIVINE_LIGHTNING_BOLT_ENTITY_RENDERER_PROVIDER =
+        (EntityRendererProvider<DivineLightningBolt>)(EntityRendererProvider) LightningBoltRenderer::new;
+      event.registerEntityRenderer(ENTITY_TYPE_DIVINE_LIGHTNING_BOLT.get(), DIVINE_LIGHTNING_BOLT_ENTITY_RENDERER_PROVIDER);
     }
   }
 
