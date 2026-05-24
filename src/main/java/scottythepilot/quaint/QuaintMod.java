@@ -9,6 +9,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -18,6 +19,7 @@ import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.RegistryAccess;
@@ -204,7 +206,7 @@ public class QuaintMod {
         .title(Component.translatable("itemGroup.quaint.main"))
         .withTabsBefore(CreativeModeTabs.OP_BLOCKS)
         .icon(() -> ITEM_GOD_PARTICLE.get().getDefaultInstance())
-        .displayItems(QuaintMod::generateDisplayItems)
+        .displayItems(QuaintMod::generateTabItems)
         .build();
     });
 
@@ -214,29 +216,6 @@ public class QuaintMod {
     ATTACHMENT_TYPES.register("first_join_done", () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).build());
   public static final DeferredHolder<AttachmentType<?>, AttachmentType<UniqueLootData>> ATTACHMENT_TYPE_UNIQUE_LOOT =
     ATTACHMENT_TYPES.register("unique_loot", () -> AttachmentType.builder(() -> new UniqueLootData()).serialize(UniqueLootData.CODEC).build());
-
-  private static void generateDisplayItems(ItemDisplayParameters parameters, CreativeModeTab.Output output) {
-    output.accept(ITEM_HEART_OF_THE_SUN.get());
-    output.accept(ITEM_HEART_OF_THE_RAIN.get());
-    output.accept(ITEM_HEART_OF_THE_STORM.get());
-    output.accept(ITEM_HEART_OF_THE_MOON.get());
-    output.accept(ITEM_HEART_OF_THE_EARTH.get());
-    output.accept(ITEM_HEART_OF_THE_SKIES.get());
-
-    output.accept(ITEM_STAFF_OF_THE_SUN.get());
-    output.accept(ITEM_STAFF_OF_THE_RAIN.get());
-    output.accept(ITEM_STAFF_OF_THE_STORM.get());
-
-    output.accept(ITEM_HOLY_MACKEREL.get());
-
-    output.accept(ITEM_MYSTERY_SAPLING.get());
-    output.accept(ITEM_MYSTERY_SEEDS.get());
-    output.accept(ITEM_MYSTERY_BOX.get());
-
-    output.accept(ITEM_DUBIOUS_DECOCTION.get());
-
-    output.accept(ITEM_GOD_PARTICLE.get());
-  }
 
   public QuaintMod(IEventBus modEventBus, ModContainer modContainer) {
     modEventBus.addListener(this::onFMLCommonSetup);
@@ -258,6 +237,47 @@ public class QuaintMod {
   }
 
   private void onFMLCommonSetup(FMLCommonSetupEvent event) {}
+
+  private static void generateTabItems(ItemDisplayParameters parameters, CreativeModeTab.Output output) {
+    QuaintMod.generateTabItems(output, null);
+  }
+
+  private static void generateTabItems(CreativeModeTab.Output output, @Nullable ResourceKey<CreativeModeTab> tabKey) {
+    if (tabKey == null || tabKey == CreativeModeTabs.INGREDIENTS) {
+      output.accept(ITEM_HEART_OF_THE_SUN.get());
+      output.accept(ITEM_HEART_OF_THE_RAIN.get());
+      output.accept(ITEM_HEART_OF_THE_STORM.get());
+      output.accept(ITEM_HEART_OF_THE_MOON.get());
+      output.accept(ITEM_HEART_OF_THE_EARTH.get());
+      output.accept(ITEM_HEART_OF_THE_SKIES.get());
+    }
+
+    if (tabKey == null || tabKey == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+      output.accept(ITEM_STAFF_OF_THE_SUN.get());
+      output.accept(ITEM_STAFF_OF_THE_RAIN.get());
+      output.accept(ITEM_STAFF_OF_THE_STORM.get());
+      output.accept(ITEM_MYSTERY_SAPLING.get());
+      output.accept(ITEM_MYSTERY_SEEDS.get());
+      output.accept(ITEM_MYSTERY_BOX.get());
+    }
+
+    if (tabKey == null || tabKey == CreativeModeTabs.COMBAT) {
+      output.accept(ITEM_HOLY_MACKEREL.get());
+    }
+
+    if (tabKey == null || tabKey == CreativeModeTabs.FOOD_AND_DRINKS) {
+      output.accept(ITEM_DUBIOUS_DECOCTION.get());
+    }
+
+    if (tabKey == null) {
+      for (final Item item: new Item[] { Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION, Items.TIPPED_ARROW }) {
+        output.accept(PotionContents.createItemStack(item, POTION_CLARITY));
+        output.accept(PotionContents.createItemStack(item, POTION_DOOM));
+      }
+
+      output.accept(ITEM_GOD_PARTICLE.get());
+    }
+  }
 
   public static boolean shouldKeepExperience(GameRules gameRules) {
     return gameRules.getBoolean(RULE_KEEP_EXPERIENCE) && !gameRules.getBoolean(GameRules.RULE_KEEPINVENTORY);
@@ -391,28 +411,7 @@ public class QuaintMod {
 
     @SubscribeEvent
     public static void onBuildCreativeModeTabContents(BuildCreativeModeTabContentsEvent event) {
-      if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-        event.accept(ITEM_HEART_OF_THE_SUN.get());
-        event.accept(ITEM_HEART_OF_THE_RAIN.get());
-        event.accept(ITEM_HEART_OF_THE_STORM.get());
-        event.accept(ITEM_HEART_OF_THE_MOON.get());
-        event.accept(ITEM_HEART_OF_THE_EARTH.get());
-        event.accept(ITEM_HEART_OF_THE_SKIES.get());
-      }
-
-      if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
-        event.accept(ITEM_DUBIOUS_DECOCTION.get());
-      }
-
-      if (event.getTabKey() == CreativeModeTabs.COMBAT) {
-        event.accept(ITEM_HOLY_MACKEREL.get());
-      }
-
-      if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-        event.accept(ITEM_STAFF_OF_THE_SUN.get());
-        event.accept(ITEM_STAFF_OF_THE_RAIN.get());
-        event.accept(ITEM_STAFF_OF_THE_STORM.get());
-      }
+      QuaintMod.generateTabItems(event, event.getTabKey());
     }
 
     @SubscribeEvent
