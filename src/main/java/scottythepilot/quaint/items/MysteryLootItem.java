@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import scottythepilot.quaint.QuaintConfig;
 import scottythepilot.quaint.QuaintMod;
 import scottythepilot.quaint.Utils;
@@ -54,7 +55,7 @@ public class MysteryLootItem extends MysteryItem {
     }
   }
 
-  public ResourceKey<LootTable> getLootTableKey(ItemStack itemStack) {
+  public @Nullable ResourceKey<LootTable> getLootTableKey(ItemStack itemStack) {
     return itemStack.get(QuaintMod.DATA_COMPONENT_LOOT_TABLE);
   }
 }
