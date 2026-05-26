@@ -1,17 +1,27 @@
 package scottythepilot.quaint.loot;
 
 import com.mojang.serialization.Codec;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
-import scottythepilot.quaint.QuaintMod;
+import scottythepilot.quaint.data.QuaintData;
+
 import java.util.*;
 import java.util.function.Function;
 
 public class UniqueLootData extends HashMap<String, Integer> {
   public static final Codec<UniqueLootData> CODEC =
     Codec.unboundedMap(Codec.STRING, Codec.INT).xmap(UniqueLootData::new, o -> o);
+  public static final StreamCodec<ByteBuf, UniqueLootData> STREAM_CODEC =
+    ByteBufCodecs.map(UniqueLootData::new, ByteBufCodecs.STRING_UTF8, ByteBufCodecs.INT);
 
   public UniqueLootData() {
     super();
+  }
+
+  public UniqueLootData(int i) {
+    super(i);
   }
 
   public UniqueLootData(Map<String, Integer> map) {
@@ -27,11 +37,11 @@ public class UniqueLootData extends HashMap<String, Integer> {
   }
 
   public static UniqueLootData getAttachment(IAttachmentHolder attachmentHolder) {
-    return attachmentHolder.getData(QuaintMod.ATTACHMENT_TYPE_UNIQUE_LOOT);
+    return attachmentHolder.getData(QuaintData.AttachmentTypes.UNIQUE_LOOT);
   }
 
   public void setAttachment(IAttachmentHolder attachmentHolder) {
-    attachmentHolder.setData(QuaintMod.ATTACHMENT_TYPE_UNIQUE_LOOT, this);
+    attachmentHolder.setData(QuaintData.AttachmentTypes.UNIQUE_LOOT, this);
   }
 
   public static void updateAttachment(IAttachmentHolder attachmentHolder, Function<UniqueLootData, UniqueLootData> function) {

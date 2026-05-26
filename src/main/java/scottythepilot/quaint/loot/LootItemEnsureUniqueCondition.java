@@ -10,11 +10,10 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import org.jetbrains.annotations.NotNull;
-import scottythepilot.quaint.QuaintMod;
 import java.util.Set;
 
 public record LootItemEnsureUniqueCondition(String identifier, UniqueLootContext context, int limit) implements LootItemCondition {
-  public static MapCodec<LootItemEnsureUniqueCondition> CODEC =
+  public static final MapCodec<LootItemEnsureUniqueCondition> CODEC =
     RecordCodecBuilder.mapCodec((inst) -> {
       return inst.group(
         Codec.STRING.fieldOf("identifier").forGetter(LootItemEnsureUniqueCondition::identifier),
@@ -25,7 +24,7 @@ public record LootItemEnsureUniqueCondition(String identifier, UniqueLootContext
 
   @Override
   public @NotNull LootItemConditionType getType() {
-    return QuaintMod.LOOT_CONDITION_ENSURE_UNIQUE.get();
+    return QuaintLoot.CONDITION_ENSURE_UNIQUE.get();
   }
 
   @Override

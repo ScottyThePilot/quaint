@@ -12,12 +12,11 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import org.jetbrains.annotations.NotNull;
-import scottythepilot.quaint.QuaintMod;
 import java.util.List;
 import java.util.Set;
 
 public class LootItemRegisterUniqueFunction extends LootItemConditionalFunction {
-  public static MapCodec<LootItemRegisterUniqueFunction> CODEC =
+  public static final MapCodec<LootItemRegisterUniqueFunction> CODEC =
     RecordCodecBuilder.mapCodec((inst) -> {
       return commonFields(inst).and(inst.group(
         Codec.STRING.fieldOf("identifier").forGetter(o -> o.identifier),
@@ -40,7 +39,7 @@ public class LootItemRegisterUniqueFunction extends LootItemConditionalFunction 
 
   @Override
   public @NotNull LootItemFunctionType<? extends LootItemConditionalFunction> getType() {
-    return QuaintMod.LOOT_FUNCTION_REGISTER_UNIQUE.get();
+    return QuaintLoot.FUNCTION_REGISTER_UNIQUE.get();
   }
 
   @Override

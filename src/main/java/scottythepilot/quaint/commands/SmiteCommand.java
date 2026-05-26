@@ -14,6 +14,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import scottythepilot.quaint.QuaintMod;
 import scottythepilot.quaint.entities.DivineLightningBolt;
+import scottythepilot.quaint.entities.QuaintEntities;
 
 public class SmiteCommand {
   public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -75,7 +76,7 @@ public class SmiteCommand {
   }
 
   private static void smite(CommandSourceStack source, final Vec3 position) {
-    DivineLightningBolt lightningBolt = QuaintMod.ENTITY_TYPE_DIVINE_LIGHTNING_BOLT.get().create(source.getLevel());
+    DivineLightningBolt lightningBolt = QuaintEntities.DIVINE_LIGHTNING_BOLT.get().create(source.getLevel());
     if (lightningBolt == null) throw new NullPointerException("Newly created divine lightning bolt was null");
     lightningBolt.moveTo(position);
     source.getLevel().addFreshEntity(lightningBolt);

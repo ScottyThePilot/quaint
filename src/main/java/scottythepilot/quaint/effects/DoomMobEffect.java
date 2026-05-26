@@ -3,7 +3,7 @@ package scottythepilot.quaint.effects;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import scottythepilot.quaint.QuaintMod;
+import scottythepilot.quaint.damage_sources.QuaintDamageSources;
 
 public class DoomMobEffect extends MobEffect {
   public DoomMobEffect(MobEffectCategory category, int color) {
@@ -13,7 +13,7 @@ public class DoomMobEffect extends MobEffect {
   @Override
   public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
     if (livingEntity.isAlive()) {
-      livingEntity.hurt(QuaintMod.damageSourceDoom(livingEntity.registryAccess()), Float.MAX_VALUE);
+      livingEntity.hurt(QuaintDamageSources.damageSourceDoom(livingEntity.registryAccess()), Float.MAX_VALUE);
       return false;
     }
 
