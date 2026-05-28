@@ -11,8 +11,8 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import scottythepilot.quaint.QuaintConfig;
-import scottythepilot.quaint.QuaintMod;
 import scottythepilot.quaint.Utils;
+import scottythepilot.quaint.data.QuaintData;
 
 public class MysteryLootItem extends MysteryItem {
   public MysteryLootItem(Item.Properties properties) {
@@ -49,13 +49,13 @@ public class MysteryLootItem extends MysteryItem {
 
   public void setLootTableKey(ItemStack itemStack, ResourceKey<LootTable> lootTableKey) {
     if (lootTableKey == null) {
-      itemStack.remove(QuaintMod.DATA_COMPONENT_LOOT_TABLE);
+      itemStack.remove(QuaintData.DataComponentTypes.LOOT_TABLE);
     } else {
-      itemStack.set(QuaintMod.DATA_COMPONENT_LOOT_TABLE, lootTableKey);
+      itemStack.set(QuaintData.DataComponentTypes.LOOT_TABLE, lootTableKey);
     }
   }
 
   public @Nullable ResourceKey<LootTable> getLootTableKey(ItemStack itemStack) {
-    return itemStack.get(QuaintMod.DATA_COMPONENT_LOOT_TABLE);
+    return itemStack.get(QuaintData.DataComponentTypes.LOOT_TABLE);
   }
 }

@@ -28,7 +28,7 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import scottythepilot.quaint.blocks.QuaintBlocks;
-import scottythepilot.quaint.commands.SmiteCommand;
+import scottythepilot.quaint.commands.QuaintCommands;
 import scottythepilot.quaint.data.QuaintData;
 import scottythepilot.quaint.effects.QuaintEffects;
 import scottythepilot.quaint.entities.QuaintEntities;
@@ -82,6 +82,7 @@ public class QuaintMod {
     QuaintPotions.register(modEventBus);
     QuaintLoot.register(modEventBus);
     QuaintData.register(modEventBus);
+    QuaintCommands.register(modEventBus);
 
     CREATIVE_MODE_TABS.register(modEventBus);
 
@@ -208,7 +209,7 @@ public class QuaintMod {
 
     @SubscribeEvent
     public static void onRegisterCommandsEvent(RegisterCommandsEvent event) {
-      SmiteCommand.register(event.getDispatcher());
+      QuaintCommands.registerCommandsEvent(event);
     }
   }
 }

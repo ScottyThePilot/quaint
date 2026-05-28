@@ -12,11 +12,10 @@ import net.minecraft.commands.arguments.coordinates.Vec3Argument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
-import scottythepilot.quaint.QuaintMod;
 import scottythepilot.quaint.entities.DivineLightningBolt;
 import scottythepilot.quaint.entities.QuaintEntities;
 
-public class SmiteCommand {
+public final class SmiteCommand {
   public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
     dispatcher.register(
       Commands.literal("smite")
