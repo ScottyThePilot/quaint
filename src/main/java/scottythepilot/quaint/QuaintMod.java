@@ -10,6 +10,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.registries.*;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
@@ -32,7 +33,8 @@ import scottythepilot.quaint.commands.QuaintCommands;
 import scottythepilot.quaint.data.QuaintData;
 import scottythepilot.quaint.effects.QuaintEffects;
 import scottythepilot.quaint.entities.QuaintEntities;
-import scottythepilot.quaint.items.*;
+import scottythepilot.quaint.item_predicates.QuaintItemPredicates;
+import scottythepilot.quaint.items.QuaintItems;
 import scottythepilot.quaint.items.alchemy.QuaintPotions;
 import scottythepilot.quaint.loot.QuaintLoot;
 
@@ -48,6 +50,10 @@ public class QuaintMod {
 
   public static <T> ResourceKey<T> key(ResourceKey<? extends Registry<T>> registryKey, String name) {
     return ResourceKey.create(registryKey, QuaintMod.at(name));
+  }
+
+  public static <T> ResourceKey<Registry<T>> keyRegistry(String name) {
+    return ResourceKey.createRegistryKey(QuaintMod.at(name));
   }
 
   public static <T> TagKey<T> tag(ResourceKey<? extends Registry<T>> registryKey, String name) {
@@ -83,6 +89,7 @@ public class QuaintMod {
     QuaintLoot.register(modEventBus);
     QuaintData.register(modEventBus);
     QuaintCommands.register(modEventBus);
+    QuaintItemPredicates.register(modEventBus);
 
     CREATIVE_MODE_TABS.register(modEventBus);
 
@@ -104,6 +111,11 @@ public class QuaintMod {
 
   @EventBusSubscriber(modid = QuaintMod.MOD_ID)
   public static final class Events {
+    @SubscribeEvent
+    public static void onNewRegistryEvent(NewRegistryEvent event) {
+      QuaintItemPredicates.newRegistryEvent(event);
+    }
+
     // Modify visibility of entities with the camouflage effect
     @SubscribeEvent
     public static void onLivingVisibility(LivingEvent.LivingVisibilityEvent event) {
